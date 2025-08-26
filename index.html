@@ -296,6 +296,10 @@
                         <div class="stat-value">456</div>
                     </div>
                     <div class="stat-card" @click="scrollToModule('user-registration')">
+                        <div class="stat-title">活跃用户数</div>
+                        <div class="stat-value">123</div>
+                    </div>
+                    <div class="stat-card" @click="scrollToModule('user-registration')">
                         <div class="stat-title">付费用户数</div>
                         <div class="stat-value">123</div>
                     </div>
@@ -351,6 +355,7 @@
 
         <h2>二、业务数据分析</h2>
 
+        <!-- 2.1游客访问统计 -->
         <div class="module-card" id="guest-statistics">
             <div class="module-card-header">
                 <div class="module-card-title">
@@ -415,8 +420,9 @@
             </div>
         </div>
 
-        <div class="module-card">
-            <div class="module-card-header">
+        <!-- 2.2用户注册统计 -->
+        <div class="module-card" id="user-registration">
+            <div class="module-card-header" id="user-registration">
                 <div class="module-card-title">
                     2.2 用户注册统计
                 </div>
@@ -479,7 +485,8 @@
             </div>
         </div>
 
-        <div class="module-card">
+        <!-- 2.3会话数据统计 -->
+        <div class="module-card" id="conversation-statistics">
             <div class="module-card-header">
                 <div class="module-card-title">
                     2.3 会话数据统计
@@ -543,7 +550,8 @@
             </div>
         </div>
 
-        <div class="module-card">
+        <!-- 2.4订单数据统计 -->
+        <div class="module-card" id="order-statistics">
             <div class="module-card-header">
                 <div class="module-card-title">
                     2.4 订单数据统计
@@ -609,7 +617,8 @@
             </div>
         </div>
 
-        <div class="module-card">
+        <!-- 2.5服务数据统计 -->
+        <div class="module-card" id="service-statistics">
             <div class="module-card-header">
                 <div class="module-card-title">
                     2.5 服务数据统计
@@ -873,7 +882,7 @@
                     // 会话类型分布
                     this.sessionTypeChart = echarts.init(document.getElementById('sessionTypeChart'));
                     this.sessionTypeChart.setOption({
-                        color: ['#6CE3F5', '#3A65C2', '#E640FF'],
+                        color: ['#6CE3F5', '#3A65C2', '#E640FF','#fad0c4'],
                         tooltip: {
                             trigger: 'item',
                             formatter: '{a} <br/>{b}: {c} ({d}%)'
@@ -906,7 +915,8 @@
                             data: [
                                 { value: 1048, name: 'AI会话' },
                                 { value: 735, name: '碳盘查会话' },
-                                { value: 580, name: '碳足迹会话' }
+                                { value: 580, name: '碳足迹会话' },
+                                { value: 580, name: 'ESG会话' }
                             ]
                         }]
                     });
@@ -1005,7 +1015,7 @@
                     // 订单状态分布（南丁格尔玫瑰图）
                     this.orderStatusChart = echarts.init(document.getElementById('orderStatusChart'));
                     this.orderStatusChart.setOption({
-                        color: ['#6CE3F5', '#3A65C2', '#E640FF'],
+                        color: ['#6CE3F5', '#3A65C2', '#E640FF','#fad0c4','#a18cd1','#c2e9fb','#96e6a1'],
                         tooltip: {
                             trigger: 'item',
                             formatter: '{a} <br/>{b}: {c} ({d}%)'
@@ -1038,7 +1048,12 @@
                             data: [
                                 { value: 234, name: '未支付' },
                                 { value: 567, name: '已支付' },
-                                { value: 123, name: '已升级' }
+                                { value: 423, name: '已升级' },
+                                { value: 323, name: '升级中' },
+                                { value: 623, name: '已升级' },
+                                { value: 123, name: '已取消' },
+                                { value: 223, name: '退款中' },
+                                { value:123, name: '已退款' }
                             ]
                         }]
                     });
@@ -1247,11 +1262,13 @@
                     const aiSessions = Math.floor(Math.random() * 1000 + 800);
                     const carbonSessions = Math.floor(Math.random() * 800 + 600);
                     const footprintSessions = Math.floor(Math.random() * 600 + 400);
+                    const esgSessions = Math.floor(Math.random() * 400 + 300);
 
                     const typeData = [
                         { value: aiSessions, name: 'AI会话' },
                         { value: carbonSessions, name: '碳盘查会话' },
-                        { value: footprintSessions, name: '碳足迹会话' }
+                        { value: footprintSessions, name: '碳足迹会话' },
+                        { value: esgSessions, name: 'ESG会话' }
                     ];
                     this.sessionTypeChart.setOption({
                         series: [{
@@ -1263,6 +1280,7 @@
                     this.overviewData.value[2].value = aiSessions.toLocaleString();
                     this.overviewData.value[3].value = carbonSessions.toLocaleString();
                     this.overviewData.value[4].value = footprintSessions.toLocaleString();
+                    this.overviewData.value[5].value = esgSessions.toLocaleString();
                 },
 
                 updateProductModuleCharts() {
